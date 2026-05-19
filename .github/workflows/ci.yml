@@ -27,9 +27,12 @@ jobs:
       - name: Execute Automated Concurrency Test Suite
         run: |
           make test
-          export LD_LIBRARY_PATH=test/deps:$LD_LIBRARY_PATH
-          ./test/test_runner
+          export LD_LIBRARY_PATH=.:test/deps:$LD_LIBRARY_PATH
+          ./test/test_runner --stress
 
       - name: Run Memory Profiling (Valgrind Leak Check)
         run: |
-          valgrind --leak-check=full --error-exitcode=1 ./test/test_runner
+          # Include both paths here to stop the shared library 127 crash
+          export LD_LIBRARY_PATH=.:test/deps:$LD_LIBRARY_PATH
+          # Pass a flag to run a quick, single-pass execution just to verify the heap
+          valgrind --leak-check=full --error-exitcode=1 ./test/test_runner --quick

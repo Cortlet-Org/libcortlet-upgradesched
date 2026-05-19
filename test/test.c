@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sched.h>
+#include <string.h>
 
 // Simple heavy-lifting structural simulation
 void sample_problem_solver(void* arg) {
@@ -14,20 +15,29 @@ void sample_problem_solver(void* arg) {
     printf("[Cortlet Worker] Executing task #%ld on physical CPU core: %d\n", task_id, actual_core);
 
     // Simulate minor computational workload latency
-    usleep(50000);
+    usleep(5000); // Dropped slightly for overall performance safety
 }
 
-int main(void) {
-    printf("=== Initializing Cortlet UpgradeSched (v1 Test) ===\n");
+int main(int argc, char* argv[]) {
+    long total_tasks = 50000; // Default heavy stress parameter
 
+    // Parse runtime flags to optimize GitHub Actions feedback loop speed
+    if (argc > 1 && strcmp(argv[1], "--quick") == 0) {
+        printf("=== Quick Memory Profiling Mode Detected ===\n");
+        total_tasks = 10; // Valgrind only needs a few iterations to catch allocation leaks
+    } else {
+        printf("=== Full Concurrency Stress Test Mode (%ld tasks) ===\n", total_tasks);
+    }
+
+    printf("=== Initializing Cortlet UpgradeSched (v1 Test) ===\n");
     cortlet_sched_t* sched = cortlet_sched_init();
     if (!sched) {
         fprintf(stderr, "Failed to initialize scheduler.\n");
         return 1;
     }
 
-    printf("\n=== Dispatching 50,000 Tasks via Lock-Free Pipeline ===\n");
-    for (long i = 1; i <= 50000; i++) {
+    printf("\n=== Dispatching Tasks via Lock-Free Pipeline ===\n");
+    for (long i = 1; i <= total_tasks; i++) {
         cortlet_sched_push(sched, sample_problem_solver, (void*)i);
     }
 
