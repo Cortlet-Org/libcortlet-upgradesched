@@ -1,0 +1,71 @@
+name: "🐛 Bug Report"
+description: "Report a runtime crash, memory leak, or concurrency failure."
+title: "[BUG]: "
+labels: ["bug", "unverified"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Please fill out this form with as much detail as possible to help us trace low-level concurrency or memory alignment issues.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "A clear and concise description of what the failure is. If this is a race condition, describe the observed interleaved execution state."
+      placeholder: "e.g., Worker threads deadlock when processing exactly 4096 tasks concurrently..."
+    validations:
+      required: true
+
+  - type: input
+    id: os_distro
+    attributes:
+      label: "Operating System / Distribution"
+      placeholder: "e.g., Ubuntu 24.04 LTS, Arch Linux"
+    validations:
+      required: true
+
+  - type: input
+    id: kernel_version
+    attributes:
+      label: "Linux Kernel Version"
+      description: "Run `uname -r` in your terminal."
+      placeholder: "e.g., 6.8.0-31-generic"
+    validations:
+      required: true
+
+  - type: input
+    id: cpu_specs
+    attributes:
+      label: "CPU Architecture & Core Layout"
+      placeholder: "e.g., AMD Ryzen 9 7950X (16 Cores / 32 Threads)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction_code
+    attributes:
+      label: "Minimal Reproducible Example (MRE)"
+      description: "Provide a minimal, self-contained C snippet that triggers the bug."
+      render: c
+      placeholder: |
+        #include <cortlet-upgradesched.h>
+        // Paste code here
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs_diagnostics
+    attributes:
+      label: "Diagnostics & Trace Outputs"
+      description: "Paste your Valgrind memory traces, ThreadSanitizer (TSan) race data, or GDB backtraces here."
+      render: text
+      placeholder: "Paste logs here..."
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: "Expected Behavior"
+      placeholder: "Describe what the engine should have done under normal operation."
+    validations:
+      required: true

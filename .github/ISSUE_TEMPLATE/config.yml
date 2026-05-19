@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "📖 Official Core Documentation"
+    url: "https://cortlet.com/docs/libcortlet-upgradesched"
+    about: "Read full API contracts, hardware mapping profiles, and usage guides."
+  - name: "🔒 Security Vulnerability Reporting"
+    url: "mailto:compliance@cortlet.com"
+    about: "If you found a critical security exploit, email our compliance desk directly."

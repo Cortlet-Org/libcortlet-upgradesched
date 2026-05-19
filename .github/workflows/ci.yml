@@ -1,0 +1,35 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install System Toolchain
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential gcc make valgrind
+
+      - name: Clean and Compile Binaries
+        run: |
+          make clean
+          make
+
+      - name: Execute Automated Concurrency Test Suite
+        run: |
+          make test
+          export LD_LIBRARY_PATH=test/deps:$LD_LIBRARY_PATH
+          ./test/test_runner
+
+      - name: Run Memory Profiling (Valgrind Leak Check)
+        run: |
+          valgrind --leak-check=full --error-exitcode=1 ./test/test_runner

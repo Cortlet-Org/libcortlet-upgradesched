@@ -1,0 +1,54 @@
+name: "🚀 Feature Request"
+description: "Propose an architectural optimization or a low-level scheduler enhancement."
+title: "[FEATURE]: "
+labels: ["enhancement", "discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Proposals must prioritize our core values: absolute zero-bloat, safe concurrency mechanisms, and maximum execution throughput.
+
+  - type: textarea
+    id: problem_statement
+    attributes:
+      label: "Problem Statement"
+      description: "Is your request related to an architectural limitation or hardware bottleneck?"
+      placeholder: "Describe the limitation here..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: "Proposed Solution / Optimization"
+      description: "Describe the low-level modification. Be specific about changes to atomics, barriers, memory bounds, or thread tracking mappings."
+      placeholder: "Describe your solution here..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: performance_justification
+    attributes:
+      label: "Mathematical or Performance Justification"
+      description: "Explain the profiling upside (e.g., clock cycle savings, cache line preservation, impact on atomic state mutations)."
+      placeholder: "Why will this make the engine faster or safer?"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: hot_path_impact
+    attributes:
+      label: "Hot Path Evaluation"
+      description: "Does your proposed feature introduce dynamic memory allocations or blocking mutexes into hot loops (`push`, `pop`, `steal`)?"
+      options:
+        - "No, it relies strictly on lock-free / bounded structures (Recommended)."
+        - "Yes, it adds a conditional blocking path."
+        - "Unsure, needs benchmarking."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternative Approaches Considered"
+      placeholder: "What other options were evaluated and why were they discarded?"
