@@ -1,0 +1,46 @@
+# ==========================================
+# Object Files & Compiled Binary Outputs
+# ==========================================
+*.o
+*.out
+*.app
+
+# ==========================================
+# Shared Libraries & Static Archives
+# ==========================================
+*.so
+*.so.*
+*.a
+*.la
+*.lai
+*.dylib
+
+# ==========================================
+# Project Specific Executables
+# ==========================================
+# Blocks the compiled test runner binary
+test/test_runner
+
+# ==========================================
+# Development, Profiling & Debug Traces
+# ==========================================
+# Valgrind, GDB, and core dump files
+vgcore.*
+core
+*.core
+gmon.out
+
+# ==========================================
+# Operating System & IDE Artifacts
+# ==========================================
+# Linux / macOS system files
+.DS_Store
+Thumbs.db
+
+# VS Code / CLion / Vim local configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+.clangd/
+compile_commands.json
