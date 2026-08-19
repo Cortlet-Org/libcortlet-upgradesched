@@ -1,0 +1,32 @@
+[package]
+name = "libcortlet-upgradesched"
+version = "2.0.0"
+edition = "2024"
+description = "High-performance Linux task scheduler with a C-compatible API"
+license = "MIT"
+repository = "https://github.com/Cortlet-Org/libcortlet-upgradesched"
+readme = "README.md"
+publish = false
+
+[lib]
+name = "cortlet_upgradesched"
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
+crossbeam-deque = "0.8.7"
+parking_lot = "0.12"
+libc = "0.2"
+
+[profile.dev]
+opt-level = 0
+debug = true
+overflow-checks = true
+panic = "abort"
+
+[profile.release]
+opt-level = 3
+debug = false
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
